@@ -4,6 +4,8 @@ var answerArea = document.querySelector("#answerArea"); //answerArea Variable
 var submitButton = document.createElement("button"); //button
 var countDown = document.getElementById("countDown");
 var currentQuestion;
+var answerTimer;
+var questionTimer;
 var totalScore;
 
 submitButton.className = "btn";
@@ -13,26 +15,26 @@ questionText.className = "questionText";
 var questionIndex = 0;
 var answerText = document.createElement("p");
 answerText.className = "answerText";
-var questionInterval;
+
 
 var questions = [
   {
     question: "test Question",
     choices: ["answer1", "amswer2", "answer3"],
     answer: 1,
-    questionTime: 5000,
+    questionTime: 10000,
   },
   {
     question: "test Question 2",
     choices: ["answers1", "amswers2", "answesr3"],
     answer: 2,
-    questionTime: 5000,
+    questionTime: 10000,
   },
   {
     question: "test Question 3",
     choices: ["answerqw1", "amsweqwr2", "answerqw3"],
     answer: 0,
-    questionTime: 5000,
+    questionTime: 10000,
   }
 ];
 
@@ -47,27 +49,41 @@ var removeContent = function () {
   questionArea.innerHTML = "";
   answerArea.innerHTML = "";
   submitButton.remove();
+  countDown.innerHTML="";
 };
-var answerMethod = function(event){
+var resetTimer = function(){
     
+    var timer = getTimer();
+    console.log(timer);
+    startTimer(timer / 1000);
+    questionTimer= setTimeout(renderQuestion, timer);
+    return timer;
+}
+var answerMethod = function(event){
+    clearTimeout(questionTimer);
+    clearTimeout(answerTimer);
     if(event.target.dataset.answerId==currentQuestion.answer)
     {
         alert("You are right")
-        removeContent();
-        renderQuestion();
+        
+        
+    }else{
+        alert("incorrect Answer");
     }
+    renderQuestion()
 }
 var renderQuestion = function () {
   if (!(questionIndex < questions.length)) {
+    removeContent()
     return;
   }
   else{ 
     removeContent();
-    var timer = getTimer();
-    startTimer(timer / 1000);
+  
     var question = questions[questionIndex];
     console.log(question);
     questionText.innerHTML = question.question;
+    questionText.setAttribute("data-answer-state","notAnswered")
     questionArea.appendChild(questionText);
     for (var i = 0; i < question.choices.length; i++) {
       var answerButton = document.createElement("button");
@@ -78,17 +94,20 @@ var renderQuestion = function () {
       answerArea.appendChild(answerButton);
       answerButton.addEventListener("click",answerMethod); 
     }   
+   resetTimer();
+    
     questionIndex++;
     
- 
-    setTimeout(renderQuestion, timer);}
+}
+    
     
 };
+
 var startTimer = function (timer) {
   if (timer > 0) {
     countDown.innerHTML = timer;
     timer--;
-    setTimeout(startTimer, 1000, timer);
+    answerTimer=setTimeout(startTimer, 1000, timer);
   } else {
   }
 };
