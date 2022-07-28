@@ -83,7 +83,7 @@ var applicationSetup = function () {
   removeContent();//Called to update DOM render 
   questionText.textContent = "Welcome to the Quiz";
   answerText.textContent =
-    "Try to answer the following code-related questions within the time limit keep in mind that incorrect answers will penalize your score/time by ten seconds";
+    "Try to answer the following code-related questions within the time limit keep in mind that incorrect answers will penalize your score by -1, Each question has a different timer based on difficulity ";
   questionArea.appendChild(questionText);
   answerArea.appendChild(answerText);
   answerArea.appendChild(submitButton);
