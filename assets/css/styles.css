@@ -35,7 +35,21 @@ h1 {
   font-size: 40px;
 }
 .btn-answer{
-    background-color:palevioletred;
+    background-color:#410075;
     width: 50%;
     margin: 10px;
 }
+.table{
+  margin-left:40% ;
+  text-align: center;
+
+}
+table td{
+    padding:20px;
+   
+}
+table tr td{
+  color: blue;
+  font-size: 30px;
+}
+
